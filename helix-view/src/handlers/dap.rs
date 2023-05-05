@@ -46,7 +46,7 @@ pub async fn select_thread_id(editor: &mut Editor, thread_id: ThreadId, force: b
 pub async fn fetch_stack_trace(debugger: &mut Client, thread_id: ThreadId) {
     let (frames, _) = match debugger.stack_trace(thread_id).await {
         Ok(frames) => frames,
-        Err(_) => return,
+        Err(e) => panic!("{:?}", e),
     };
     debugger.stack_frames.insert(thread_id, frames);
     debugger.active_frame = Some(0);
